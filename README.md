@@ -2,6 +2,12 @@
 
 Trying to monitor my speaker/headphone usage on my laptop.
 
+**Table of content**
+* [How does this work](#how-does-this-work)
+* [Usage](#usage)
+* [Why pulseaudio](#why-pulseaudio)
+* [Why pactl based C code](#why-using-pactl-based-c-code)
+
 ## How does this work?
 **Step 1** Gather data to perform analytics.
 
@@ -15,6 +21,27 @@ Sample dumps are available in [examples](examples).
 
 ### Step-2 Analysis
 WIP - gathering data for a week.
+
+## Usage
+setup 
+```bash
+git clone https://github.com/himanshub16/music-habits
+cd music-habits
+./setup.sh
+```
+
+start collecting data
+```bash
+cd pulseaudio/src
+make pactl
+./pactl
+```
+
+view data collected
+```bash
+cd pulseaudio/src
+tail -f sink*
+```
 
 ## Why pulseaudio?
 Pulseaudio provides a great [API](https://freedesktop.org/software/pulseaudio/doxygen/index.html) on Linux which provides
