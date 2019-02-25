@@ -55,5 +55,5 @@ Pulseaudio provides a great [API](https://freedesktop.org/software/pulseaudio/do
 ## Why using pactl based C code?
 pulseaudio Python drivers are a great choice to use the library. However, I couldn't find one which provides `corked status` for any sink-input. This is required to know that a sink-input (browser/music player) has paused playing, and there is nothing coming out of the speakers.
 
-This is where C came to rescue. However, due to very tiring nature of C, and after dealing with many naive mistakes (coming back from Python/JavaScript/Golang), I went up to tweaking `pactl.c` to my use-case, and it works well.
+This is where C came to rescue. However, due to very tiring nature of C, and after dealing with many naive mistakes (coming back from Python/JavaScript/Golang), I went up to [tweaking](https://github.com/himanshub16/music-habits/commit/598648e7ac7f047131a623b3b60231799b3adf85#diff-3e6480237f62687e7fb6155633276902) `pactl.c` to my use-case, and it works well.
 
