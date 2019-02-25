@@ -17,6 +17,8 @@ Trying to monitor my speaker/headphone usage on my laptop.
 Linux machines using ALSA/[Pulseaudio](https://www.freedesktop.org/wiki/Software/PulseAudio/) play sound using a client-server architecture.
 A [C program based on pactl](pactl.c) subscribes to events on output devices and applications playing sound, and logs them to a file in CSV-format.
 
+[See the diff to know the changes made](https://github.com/himanshub16/music-habits/commit/598648e7ac7f047131a623b3b60231799b3adf85#diff-3e6480237f62687e7fb6155633276902)
+
 Sample dumps are available in [examples](examples).
 
 ### Step-2 Analysis
