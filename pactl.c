@@ -71,7 +71,7 @@ void cleanup_all_nodes();
 
 void remove_node(node *n) {
     // mark vol = 0 for this node
-    n->vol = 0.0f;
+    n->vol = -1.0f;
     log_node(n);
 
     if (!fclose(n->logfile))
