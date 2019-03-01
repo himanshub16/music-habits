@@ -252,7 +252,7 @@ static void get_sink_info_callback(pa_context *c, const pa_sink_info *i, int is_
 
     if (is_last < 0) {
         pa_log(_("Failed to get sink information: %s"), pa_strerror(pa_context_errno(c)));
-        quit(1);
+        /* quit(1); */
         return;
     }
 
@@ -297,7 +297,7 @@ static void get_sink_input_info_callback(pa_context *c, const pa_sink_input_info
 
     if (is_last < 0) {
         pa_log(_("Failed to get sink input information: %s"), pa_strerror(pa_context_errno(c)));
-        quit(1);
+        /* quit(1); */
         return;
     }
 
