@@ -1,0 +1,89 @@
+body {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+}
+
+#buttons {
+    display: flex;
+    flex-direction: row;
+    margin: 20px;
+}
+
+#buttons button {
+    margin: 5px;
+    background-color: white;
+    color: black;
+    border: 2px solid black;
+    padding: 5px;
+    font-weight: bold;
+    font-family: monospace;
+    cursor: pointer;
+}
+.btn.active {
+    color: white !important;
+    background-color: black !important;
+}
+
+.btn:hover {
+    color: #3c3737 !important;
+}
+
+#summary {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 700px;
+    height: 300px;
+    background-color: white;
+    border: 1px solid grey;
+}
+
+#bar {
+    padding: 50px;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    box-sizing: border-box;
+}
+#speakerBar {
+    background-color: #59cbb7;
+    flex-grow: 3;
+    height: 50px;
+}
+
+#headphoneBar {
+    background-color: #ff4f5e;
+    flex-grow: 1;
+    height: 50px;
+}
+
+#info {
+    width: 100%;
+    padding: 0 50px;
+    font-family: monospace;
+    font-size: 20px;
+}
+.device td {
+    padding-bottom: 20px;
+    font-weight: bold;
+}
+.left {
+    text-align: center;
+}
+.right {
+    text-align: center;
+}
+.left, .right {
+    font-size: 1.2em;
+}
+.mid {
+    font-weight: bold;
+    text-align: center;
+}

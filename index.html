@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+        <title>Summary of sound usage</title>
+        <link href="index.css" rel="stylesheet"/>
+    </head>
+    <body>
+
+        <h3>How much do I listen to music?</h3>
+
+        <div id="buttons">
+            <button class="btn" id="this-month">This Month</button>
+            <button class="btn" id="yesterday">Yesterday</button>
+            <button class="btn" id="today">Today</button>
+            <button class="btn" id="this-week">This week</button>
+            <button class="btn" id="all-time">From the beginning of history</button>
+        </div>
+
+        <div id="summary">
+            <div id="bar">
+                <div id="speakerBar"></div>
+                <div id="headphoneBar"></div>
+            </div>
+
+            <table id="info">
+                <tr class="device" id="device">
+                    <td class="left">Laptop</td>
+                    <td class="mid"></td>
+                    <td class="right">Headphones</td>
+                </tr>
+
+                <tr id="averageVol">
+                    <td class="left">70%</td>
+                    <td class="mid">Average volume</td>
+                    <td class="right">20%</td>
+                </tr>
+
+                <tr id="totalTime">
+                    <td class="left">2h 30 min</td>
+                    <td class="mid">Total time</td>
+                    <td class="right">2h 15 min</td>
+                </tr>
+
+                <tr id="loud">
+                    <td class="left">1h 10 min</td>
+                    <td class="mid">Loud music</td>
+                    <td class="right">1h 5 min</td>
+                </tr>
+            </table>
+        </div>
+
+    </body>
+    <script src="index.js">
+
+    </script>
+</html>
