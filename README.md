@@ -79,6 +79,10 @@ pulseaudio Python drivers are a great choice to use the library. However, I coul
 
 This is where C came to rescue. However, due to very tiring nature of C, and after dealing with many naive mistakes (coming back from Python/JavaScript/Golang), I went up to [tweaking](https://github.com/himanshub16/music-habits/commit/598648e7ac7f047131a623b3b60231799b3adf85#diff-3e6480237f62687e7fb6155633276902) `pactl.c` to my use-case, and it works well.
 
+Currently, I couldn't compile [`pactl.c`](pactl.c) directly because of incorrect compilation flags and missing shared libraries.
+In case you can help out with the right flags, or an awesome *makefile* to compile this without having to clone entire `pulseaudio` codebase from git, [feel free to help me out](https://github.com/himanshub16/music-habits/issues/2).
+That also helps in fixing the filename from `pactl.c` to something more appropriate.
+
 ## Why Golang for analysis?
 It is just simple loops with some grouping and calculations. Python/NodeJS would be have been easier, but I just wanted to spend more time getting comfortable with Golang.
 
