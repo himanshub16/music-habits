@@ -263,10 +263,12 @@ func main() {
 
 	var logPath, duration string
 	var viz bool
+	var port int
 
 	flag.StringVar(&logPath, "logfile", "", "Path to log file")
 	flag.StringVar(&duration, "duration", "today", "Period - today/yesterday/everyday/week/month")
 	flag.BoolVar(&viz, "viz", false, "Start server to show viz")
+	flag.IntVar(&port, "port", 5000, "Port")
 
 	flag.Parse()
 	if logPath == "" {
@@ -275,7 +277,7 @@ func main() {
 	}
 
 	if viz {
-		startServer(logPath)
+		startServer(logPath, port)
 	} else {
 		var startEpoch, endEpoch int64
 		startEpoch, endEpoch = parseTs(duration)
@@ -288,10 +290,11 @@ func main() {
 
 }
 
-func startServer(logPath string) {
+func startServer(logPath string, port int) {
 	http.HandleFunc("/api", func(w http.ResponseWriter, r *http.Request) {
 		startEpoch, _ := strconv.ParseInt(r.URL.Query().Get("start"), 10, 64)
 		endEpoch, _ := strconv.ParseInt(r.URL.Query().Get("end"), 10, 64)
+
 		fmt.Println("checking for", startEpoch, endEpoch)
 		records := getRequiredRecords(logPath, startEpoch, endEpoch)
 		summary := getSummary(records)
@@ -311,10 +314,9 @@ func startServer(logPath string) {
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(response)
 	})
-	fs := http.FileServer(http.Dir("."))
+	fs := http.FileServer(http.Dir("webui"))
 	http.Handle("/", fs)
 
-	fmt.Println("starting server on port 5000")
-
-	http.ListenAndServe(":5000", nil)
+	fmt.Printf("Starting server. Go to http://localhost:%d/\n", port)
+	http.ListenAndServe(":"+strconv.Itoa(port), nil)
 }
