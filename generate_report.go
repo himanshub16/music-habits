@@ -216,15 +216,18 @@ func getSummary(deviceWiseRecords *map[string][]record) []summary_t {
 // }
 
 func secToHuman(seconds int64) string {
-	var h, m int64
+	var h, m, s int64
 
 	h = int64(seconds / 3600)
 	m = int64(seconds/60) - 60*h
+	s = seconds - h*3600 - m*60
 
-	if h == 0 {
+	if h != 0 {
+		return fmt.Sprintf("%d hrs %d min", h, m)
+	} else if m != 0 {
 		return fmt.Sprintf("%d min", m)
 	} else {
-		return fmt.Sprintf("%d hrs %d min", h, m)
+		return fmt.Sprintf("%d sec", s)
 	}
 }
 
@@ -289,7 +292,8 @@ func startServer(logPath string) {
 			response = append(response, map[string]string{
 				"device":           s.Device,
 				"avgVol":           strconv.Itoa(int(math.Round(s.AvgVol * 100))),
-				"totalTime":        secToHuman(s.TotalTime),
+				"totalTimeStr":     secToHuman(s.TotalTime),
+				"totalTime":        strconv.Itoa(int(s.TotalTime)),
 				"timeAboveAverage": secToHuman(s.TimeAboveAvg),
 			})
 		}
