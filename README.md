@@ -57,6 +57,16 @@ cd pulseaudio/src
 tail -f sink*
 ```
 
+generate summary
+```bash
+# to print summary (notice the file path)
+# duration can be today/yesterday/month/all
+go run generate_report.go -logfile pulseaudio/src/sink_input-firefox.log -duration today
+
+# to visualize in browser
+go run generate_report.go -logfile pulseaudio/src/sink_input-firefox.log -viz -port 5000
+```
+
 ## Why pulseaudio?
 Pulseaudio provides a great [API](https://freedesktop.org/software/pulseaudio/doxygen/index.html) on Linux which provides
 * list of sound sinks (output devices),
