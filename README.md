@@ -33,7 +33,7 @@ Sample dumps are available in [examples](examples).
 
 ### Step-3 Create summary
 A text summary is simple to print on terminal screen, but a pictorial view would have been more appealing.
-HTML/CSS/JS was the go-to choice here. I tried playing with [gg](https://github.com/fogleman/gg), but gave up after trying hard to center align text. If you can invest that time, please [let me know](#1).
+HTML/CSS/JS was the go-to choice here. I tried playing with [gg](https://github.com/fogleman/gg), but gave up after trying hard to center align text. If you can invest that time, please [let me know](https://github.com/himanshub16/music-habits/issues/1).
 
 ## Usage
 
@@ -77,4 +77,4 @@ Additionally, it has a decent web server built in, and has everything you need (
 ## Why HTML for viz?
 Using an entirely Go based tool is something I would prefer. I gave a lot of try with [gg](https://github.com/fogleman/gg), but after lot of hardwork required to fix and align the text, I gave up and moved to a simpler solution of using HTML and passing data from Golang via a web server.
 
-If you are enthusiastic about giving this a try, [feel free to let me know on this issue](#1).
+If you are enthusiastic about giving this a try, [feel free to let me know on this issue](https://github.com/himanshub16/music-habits/issues/1).
