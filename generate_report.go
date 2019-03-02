@@ -149,15 +149,17 @@ func getRequiredRecords(filename string, startEpoch, endEpoch int64) *map[string
 type summary_t struct {
 	Device       string
 	AvgVol       float64
+	PercTime     int
 	TotalTime    int64
 	TimeAboveAvg int64
 }
 
 func getSummary(deviceWiseRecords *map[string][]record) []summary_t {
 	var totalVol, N, avgVol float64
-	var totalTime, timeAboveAverage int64
+	var totalTime, timeAboveAverage, totalTimeListening int64
 
 	summary := make([]summary_t, 0)
+	totalTimeListening = 0
 
 	// for each device
 	for deviceName, records := range *deviceWiseRecords {
@@ -187,7 +189,13 @@ func getSummary(deviceWiseRecords *map[string][]record) []summary_t {
 			AvgVol:       avgVol,
 			TotalTime:    totalTime,
 			TimeAboveAvg: timeAboveAverage,
+			PercTime:     0,
 		})
+		totalTimeListening += totalTime
+	}
+
+	for i, _ := range summary {
+		summary[i].PercTime = int(math.Round(float64(summary[i].TotalTime) * 100.0 / float64(totalTimeListening)))
 	}
 
 	return summary
@@ -235,14 +243,15 @@ func displaySummary(summary []summary_t) {
 	for _, s := range summary {
 		// print device name
 		if strings.Contains(s.Device, "speaker") {
-			fmt.Println("Laptop speaker :")
+			fmt.Println("Laptop speaker : ")
 		} else if strings.Contains(s.Device, "headphone") {
-			fmt.Println("Headphones :")
+			fmt.Println("Headphones : ")
 		} else {
-			fmt.Println(s.Device, ":")
+			fmt.Print(s.Device, ":")
 		}
 
 		// print stats
+		fmt.Println("Used", s.PercTime, "% time.")
 		fmt.Println("Average volume :", math.Round(s.AvgVol*100), "%")
 		fmt.Println("Total time :", secToHuman(s.TotalTime))
 		fmt.Println("Loud for :", secToHuman(s.TimeAboveAvg))
@@ -292,8 +301,9 @@ func startServer(logPath string) {
 			response = append(response, map[string]string{
 				"device":           s.Device,
 				"avgVol":           strconv.Itoa(int(math.Round(s.AvgVol * 100))),
-				"totalTimeStr":     secToHuman(s.TotalTime),
+				"percTime":         strconv.Itoa(s.PercTime),
 				"totalTime":        strconv.Itoa(int(s.TotalTime)),
+				"totalTimeStr":     secToHuman(s.TotalTime),
 				"timeAboveAverage": secToHuman(s.TimeAboveAvg),
 			})
 		}

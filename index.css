@@ -2,6 +2,7 @@ body {
     height: 100vh;
     width: 100vw;
     display: flex;
+    font-family: monospace;
     flex-direction: column;
     justify-content: center;
     margin: 0;
@@ -22,7 +23,6 @@ body {
     border: 2px solid black;
     padding: 5px;
     font-weight: bold;
-    font-family: monospace;
     cursor: pointer;
 }
 .btn.active {
@@ -52,22 +52,25 @@ body {
     width: 100%;
     box-sizing: border-box;
 }
+#speakerBar, #headphoneBar {
+    height: 50px;
+    line-height: 50px;
+    flex-grow: 50;
+    text-align: center;
+    font-size: 1.2em;
+    font-weight: bold;
+}
 #speakerBar {
     background-color: #59cbb7;
-    flex-grow: 50;
-    height: 50px;
 }
 
 #headphoneBar {
     background-color: #ff4f5e;
-    flex-grow: 50;
-    height: 50px;
 }
 
 #info {
     width: 100%;
     padding: 0 50px;
-    font-family: monospace;
     font-size: 20px;
 }
 .device td {

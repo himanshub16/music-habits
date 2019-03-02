@@ -55,11 +55,13 @@ for (let btn of btns) {
         for (let d of json) {
           if (d.device.includes("speaker")) {
             speakerBar.style.flexGrow = d.totalTime
+            speakerBar.innerText = d.percTime + '%'
             avgVol.getElementsByClassName('left')[0].innerText = d.avgVol + '%'
             totalTime.getElementsByClassName('left')[0].innerText = d.totalTimeStr
             loud.getElementsByClassName('left')[0].innerText = d.timeAboveAverage
           } else if (d.device.includes('headphone')) {
             headphoneBar.style.flexGrow = d.totalTime
+            headphoneBar.innerText = d.percTime + '%'
             avgVol.getElementsByClassName('right')[0].innerText = d.avgVol + '%'
             totalTime.getElementsByClassName('right')[0].innerText = d.totalTimeStr
             loud.getElementsByClassName('right')[0].innerText = d.timeAboveAverage
