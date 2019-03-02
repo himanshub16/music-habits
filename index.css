@@ -31,7 +31,7 @@ body {
 }
 
 .btn:hover {
-    color: #3c3737 !important;
+    opacity: 0.7 !important;
 }
 
 #summary {
@@ -54,13 +54,13 @@ body {
 }
 #speakerBar {
     background-color: #59cbb7;
-    flex-grow: 3;
+    flex-grow: 50;
     height: 50px;
 }
 
 #headphoneBar {
     background-color: #ff4f5e;
-    flex-grow: 1;
+    flex-grow: 50;
     height: 50px;
 }
 

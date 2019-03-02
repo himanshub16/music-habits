@@ -1,4 +1,6 @@
 let btns = document.getElementsByClassName('btn')
+let headphoneBar = document.getElementById('headphoneBar')
+let speakerBar = document.getElementById('speakerBar')
 let avgVol = document.getElementById('averageVol')
 let totalTime = document.getElementById('totalTime')
 let loud = document.getElementById('loud')
@@ -34,7 +36,7 @@ for (let btn of btns) {
       break
 
     case 'this-week':
-      start = epochNow() - 7 * 24 * 360
+      start = epochNow() - 7 * 24 * 3600
       end = epochNow()
       break
 
@@ -52,12 +54,14 @@ for (let btn of btns) {
       .then(json => {
         for (let d of json) {
           if (d.device.includes("speaker")) {
+            speakerBar.style.flexGrow = d.totalTime
             avgVol.getElementsByClassName('left')[0].innerText = d.avgVol + '%'
-            totalTime.getElementsByClassName('left')[0].innerText = d.totalTime
+            totalTime.getElementsByClassName('left')[0].innerText = d.totalTimeStr
             loud.getElementsByClassName('left')[0].innerText = d.timeAboveAverage
           } else if (d.device.includes('headphone')) {
+            headphoneBar.style.flexGrow = d.totalTime
             avgVol.getElementsByClassName('right')[0].innerText = d.avgVol + '%'
-            totalTime.getElementsByClassName('right')[0].innerText = d.totalTime
+            totalTime.getElementsByClassName('right')[0].innerText = d.totalTimeStr
             loud.getElementsByClassName('right')[0].innerText = d.timeAboveAverage
           }
         }
