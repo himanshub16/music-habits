@@ -49,7 +49,8 @@ body {
 
 #hourly-summary {
     width: 700px;
-    height: 300px;
+    height: auto;
+    font-size: 1.2em;
 }
 
 #hourly-summary-canvas {
@@ -64,11 +65,17 @@ body {
     width: 700px;
     height: 300px;
     background-color: white;
+    margin-top: 50px;
     border: 1px solid grey;
+}
+#summary center {
+    font-size: 1.2em;
+    margin: 1.5em;
 }
 
 #bar {
     padding: 50px;
+    padding-top: 0;
     padding-bottom: 10px;
     display: flex;
     flex-direction: row;
@@ -90,6 +97,15 @@ body {
 
 #headphoneBar {
     background-color: #ff4f5e;
+}
+
+#blog-link {
+    align-content: flex-end;
+    /* position: fixed; */
+    /* bottom: 0; */
+    margin-top: 3em;
+    margin-bottom: 1em;
+    font-size: 1.2em;
 }
 
 #info {

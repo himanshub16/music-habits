@@ -12,7 +12,10 @@ let dummyResponse = {}
 let canvas = document.getElementById('hourly-summary-canvas'),
     ctx = canvas.getContext('2d'),
     chart = new Chart(ctx, {type: 'bar', data: {}, options: {
-      title: { display: true, text: 'Average volume'}
+      scales: {
+        xAxes: [{display: true, scaleLabel: {display: true, labelString: 'Hour of day', fontColor: 'black', fontStyle: 'bold'}}],
+        yAxes: [{display: true, scaleLabel: {display: true, labelString: "Volume (percent)", fontColor: 'black', fontStyle: 'bold'}}]
+      }
     }})
 
 
