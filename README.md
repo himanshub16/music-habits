@@ -64,7 +64,7 @@ generate summary
 go run generate_report.go -logfile pulseaudio/src/sink_input-firefox.log -duration today
 
 # to visualize in browser
-go run generate_report.go -logfile pulseaudio/src/sink_input-firefox.log -viz -port 5000
+go run generate_report.go -logfile pulseaudio/src/sink_input-firefox.log -interactive -port 5000
 ```
 
 ## Why pulseaudio?
