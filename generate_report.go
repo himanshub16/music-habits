@@ -30,14 +30,15 @@ func getMaxVal(a map[int64]float64) float64 {
 
 func parseTs(duration string) (startEpoch, endEpoch int64) {
 	now := time.Now()
+	today00 := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location())
 
 	switch duration {
 	case "yesterday":
-		startEpoch = time.Date(now.Year(), now.Month(), now.Day()-2, 0, 0, 0, 0, now.Location()).Unix()
-		endEpoch = time.Date(now.Year(), now.Month(), now.Day()-1, 0, 0, 0, 0, now.Location()).Unix()
+		startEpoch = today00.Add(-24 * time.Hour).Unix()
+		endEpoch = today00.Unix()
 
 	case "month":
-		startEpoch = now.Add(-time.Hour * 24 * 30).Unix()
+		startEpoch = today00.Add(-time.Hour * 24 * 30).Unix()
 		endEpoch = now.Unix()
 
 	case "all":
@@ -48,7 +49,7 @@ func parseTs(duration string) (startEpoch, endEpoch int64) {
 		fallthrough
 
 	default:
-		startEpoch = now.Add(-time.Hour * 24).Unix()
+		startEpoch = today00.Unix()
 		endEpoch = now.Unix()
 	}
 	return
@@ -271,13 +272,15 @@ func getHourWiseSummary(deviceWiseRecords *map[string][]record) []hourSummary_t 
 
 func displayHourlySummary(hourlySummary []hourSummary_t) {
 	fmt.Println("Hour wise usage :")
-	fmt.Println("Hours  | Average vol | Mostly listen on")
-	fmt.Println("---------------------------------------")
+	fmt.Println("------------------")
+	fmt.Println(" Hour | Average vol | Mostly listen on")
+	fmt.Println("------|-------------|------------------")
 	for i := 0; i < 24; i++ {
 		if hourlySummary[i].AvgVol != 0 {
-			fmt.Printf(" %2d    |     %2d %%    | %s \n", hourlySummary[i].Hour, hourlySummary[i].AvgVol, hourlySummary[i].Device)
+			fmt.Printf("  %2d  |     %2d %%    | %s \n", hourlySummary[i].Hour, hourlySummary[i].AvgVol, hourlySummary[i].Device)
 		}
 	}
+	fmt.Println("---------------------------------------")
 }
 
 // func getPropsForDevice(deviceName string) (commonName string, r, g, b, a float64) {
@@ -323,8 +326,10 @@ func displaySummary(summary []summary_t) {
 		// print device name
 		if strings.Contains(s.Device, "speaker") {
 			fmt.Println("Laptop speaker : ")
+			fmt.Println("-----------------")
 		} else if strings.Contains(s.Device, "headphone") {
 			fmt.Println("Headphones : ")
+			fmt.Println("-------------")
 		} else {
 			fmt.Print(s.Device, ":")
 		}
@@ -373,11 +378,11 @@ func main() {
 }
 
 func startServer(logPath string, port int) {
-	http.HandleFunc("/api", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/summary", func(w http.ResponseWriter, r *http.Request) {
 		startEpoch, _ := strconv.ParseInt(r.URL.Query().Get("start"), 10, 64)
 		endEpoch, _ := strconv.ParseInt(r.URL.Query().Get("end"), 10, 64)
 
-		fmt.Println("checking for", startEpoch, endEpoch)
+		fmt.Println("summary for", startEpoch, endEpoch)
 		records := getRequiredRecords(logPath, startEpoch, endEpoch)
 		summary := getSummary(records)
 
@@ -396,6 +401,19 @@ func startServer(logPath string, port int) {
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(response)
 	})
+
+	http.HandleFunc("/hourly", func(w http.ResponseWriter, r *http.Request) {
+		startEpoch, _ := strconv.ParseInt(r.URL.Query().Get("start"), 10, 64)
+		endEpoch, _ := strconv.ParseInt(r.URL.Query().Get("end"), 10, 64)
+
+		fmt.Println("hourly report for", startEpoch, endEpoch)
+		records := getRequiredRecords(logPath, startEpoch, endEpoch)
+		hourlySummary := getHourWiseSummary(records)
+
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(hourlySummary)
+	})
+
 	fs := http.FileServer(http.Dir("docs"))
 	http.Handle("/", fs)
 
