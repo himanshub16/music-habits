@@ -1,0 +1,106 @@
+{
+  "hourly": {
+    "this-month": [{"Hour":0,"AvgVol":0,"Device":"Headphones"},{"Hour":1,"AvgVol":0,"Device":"Headphones"},{"Hour":2,"AvgVol":24,"Device":"Headphones"},{"Hour":3,"AvgVol":17,"Device":"Headphones"},{"Hour":4,"AvgVol":0,"Device":"Headphones"},{"Hour":5,"AvgVol":0,"Device":"Headphones"},{"Hour":6,"AvgVol":0,"Device":"Headphones"},{"Hour":7,"AvgVol":0,"Device":"Headphones"},{"Hour":8,"AvgVol":87,"Device":"Speakers"},{"Hour":9,"AvgVol":87,"Device":"Speakers"},{"Hour":10,"AvgVol":54,"Device":"Speakers"},{"Hour":11,"AvgVol":64,"Device":"Speakers"},{"Hour":12,"AvgVol":74,"Device":"Speakers"},{"Hour":13,"AvgVol":59,"Device":"Speakers"},{"Hour":14,"AvgVol":68,"Device":"Speakers"},{"Hour":15,"AvgVol":73,"Device":"Speakers"},{"Hour":16,"AvgVol":53,"Device":"Speakers"},{"Hour":17,"AvgVol":61,"Device":"Speakers"},{"Hour":18,"AvgVol":70,"Device":"Speakers"},{"Hour":19,"AvgVol":65,"Device":"Speakers"},{"Hour":20,"AvgVol":44,"Device":"Speakers"},{"Hour":21,"AvgVol":35,"Device":"Headphones"},{"Hour":22,"AvgVol":16,"Device":"Headphones"},{"Hour":23,"AvgVol":46,"Device":"Headphones"}],
+
+    "yesterday": [{"Hour":0,"AvgVol":0,"Device":"Headphones"},{"Hour":1,"AvgVol":0,"Device":"Headphones"},{"Hour":2,"AvgVol":0,"Device":"Headphones"},{"Hour":3,"AvgVol":0,"Device":"Headphones"},{"Hour":4,"AvgVol":0,"Device":"Headphones"},{"Hour":5,"AvgVol":0,"Device":"Headphones"},{"Hour":6,"AvgVol":0,"Device":"Headphones"},{"Hour":7,"AvgVol":0,"Device":"Headphones"},{"Hour":8,"AvgVol":0,"Device":"Headphones"},{"Hour":9,"AvgVol":0,"Device":"Headphones"},{"Hour":10,"AvgVol":54,"Device":"Speakers"},{"Hour":11,"AvgVol":64,"Device":"Speakers"},{"Hour":12,"AvgVol":67,"Device":"Speakers"},{"Hour":13,"AvgVol":55,"Device":"Speakers"},{"Hour":14,"AvgVol":65,"Device":"Speakers"},{"Hour":15,"AvgVol":72,"Device":"Speakers"},{"Hour":16,"AvgVol":0,"Device":"Headphones"},{"Hour":17,"AvgVol":66,"Device":"Speakers"},{"Hour":18,"AvgVol":84,"Device":"Speakers"},{"Hour":19,"AvgVol":64,"Device":"Speakers"},{"Hour":20,"AvgVol":70,"Device":"Speakers"},{"Hour":21,"AvgVol":77,"Device":"Speakers"},{"Hour":22,"AvgVol":0,"Device":"Headphones"},{"Hour":23,"AvgVol":0,"Device":"Headphones"}],
+
+    "today": [{"Hour":0,"AvgVol":0,"Device":"Headphones"},{"Hour":1,"AvgVol":0,"Device":"Headphones"},{"Hour":2,"AvgVol":24,"Device":"Headphones"},{"Hour":3,"AvgVol":17,"Device":"Headphones"},{"Hour":4,"AvgVol":0,"Device":"Headphones"},{"Hour":5,"AvgVol":0,"Device":"Headphones"},{"Hour":6,"AvgVol":0,"Device":"Headphones"},{"Hour":7,"AvgVol":0,"Device":"Headphones"},{"Hour":8,"AvgVol":0,"Device":"Headphones"},{"Hour":9,"AvgVol":0,"Device":"Headphones"},{"Hour":10,"AvgVol":0,"Device":"Headphones"},{"Hour":11,"AvgVol":0,"Device":"Headphones"},{"Hour":12,"AvgVol":0,"Device":"Headphones"},{"Hour":13,"AvgVol":81,"Device":"Speakers"},{"Hour":14,"AvgVol":81,"Device":"Speakers"},{"Hour":15,"AvgVol":78,"Device":"Speakers"},{"Hour":16,"AvgVol":58,"Device":"Speakers"},{"Hour":17,"AvgVol":48,"Device":"Speakers"},{"Hour":18,"AvgVol":88,"Device":"Speakers"},{"Hour":19,"AvgVol":0,"Device":"Headphones"},{"Hour":20,"AvgVol":0,"Device":"Headphones"},{"Hour":21,"AvgVol":0,"Device":"Headphones"},{"Hour":22,"AvgVol":0,"Device":"Headphones"},{"Hour":23,"AvgVol":0,"Device":"Headphones"}],
+
+    "this-week": [{"Hour":0,"AvgVol":0,"Device":"Headphones"},{"Hour":1,"AvgVol":0,"Device":"Headphones"},{"Hour":2,"AvgVol":24,"Device":"Headphones"},{"Hour":3,"AvgVol":17,"Device":"Headphones"},{"Hour":4,"AvgVol":0,"Device":"Headphones"},{"Hour":5,"AvgVol":0,"Device":"Headphones"},{"Hour":6,"AvgVol":0,"Device":"Headphones"},{"Hour":7,"AvgVol":0,"Device":"Headphones"},{"Hour":8,"AvgVol":87,"Device":"Speakers"},{"Hour":9,"AvgVol":87,"Device":"Speakers"},{"Hour":10,"AvgVol":54,"Device":"Speakers"},{"Hour":11,"AvgVol":64,"Device":"Speakers"},{"Hour":12,"AvgVol":74,"Device":"Speakers"},{"Hour":13,"AvgVol":59,"Device":"Speakers"},{"Hour":14,"AvgVol":68,"Device":"Speakers"},{"Hour":15,"AvgVol":73,"Device":"Speakers"},{"Hour":16,"AvgVol":52,"Device":"Speakers"},{"Hour":17,"AvgVol":68,"Device":"Speakers"},{"Hour":18,"AvgVol":69,"Device":"Speakers"},{"Hour":19,"AvgVol":50,"Device":"Speakers"},{"Hour":20,"AvgVol":35,"Device":"Headphones"},{"Hour":21,"AvgVol":30,"Device":"Headphones"},{"Hour":22,"AvgVol":45,"Device":"Headphones"},{"Hour":23,"AvgVol":46,"Device":"Headphones"}],
+
+    "all-time": [{"Hour":0,"AvgVol":0,"Device":"Headphones"},{"Hour":1,"AvgVol":0,"Device":"Headphones"},{"Hour":2,"AvgVol":24,"Device":"Headphones"},{"Hour":3,"AvgVol":17,"Device":"Headphones"},{"Hour":4,"AvgVol":0,"Device":"Headphones"},{"Hour":5,"AvgVol":0,"Device":"Headphones"},{"Hour":6,"AvgVol":0,"Device":"Headphones"},{"Hour":7,"AvgVol":0,"Device":"Headphones"},{"Hour":8,"AvgVol":87,"Device":"Speakers"},{"Hour":9,"AvgVol":87,"Device":"Speakers"},{"Hour":10,"AvgVol":54,"Device":"Speakers"},{"Hour":11,"AvgVol":64,"Device":"Speakers"},{"Hour":12,"AvgVol":74,"Device":"Speakers"},{"Hour":13,"AvgVol":59,"Device":"Speakers"},{"Hour":14,"AvgVol":68,"Device":"Speakers"},{"Hour":15,"AvgVol":73,"Device":"Speakers"},{"Hour":16,"AvgVol":52,"Device":"Speakers"},{"Hour":17,"AvgVol":68,"Device":"Speakers"},{"Hour":18,"AvgVol":69,"Device":"Speakers"},{"Hour":19,"AvgVol":50,"Device":"Speakers"},{"Hour":20,"AvgVol":35,"Device":"Headphones"},{"Hour":21,"AvgVol":30,"Device":"Headphones"},{"Hour":22,"AvgVol":45,"Device":"Headphones"},{"Hour":23,"AvgVol":46,"Device":"Headphones"}]
+
+  },
+  "summary": {
+    "today": [
+      {
+        "avgVol": "67",
+        "device": "analog-output-speaker",
+        "percTime": "71",
+        "timeAboveAverage": "1 hrs 15 min",
+        "totalTime": "8339",
+        "totalTimeStr": "2 hrs 18 min"
+      },
+      {
+        "avgVol": "19",
+        "device": "analog-output-headphones",
+        "percTime": "29",
+        "timeAboveAverage": "11 min",
+        "totalTime": "3348",
+        "totalTimeStr": "55 min"
+      }
+    ],
+    "yesterday": [
+      {
+        "avgVol": "14",
+        "device": "analog-output-headphones",
+        "percTime": "0",
+        "timeAboveAverage": "21 sec",
+        "totalTime": "22",
+        "totalTimeStr": "22 sec"
+      },
+      {
+        "avgVol": "69",
+        "device": "analog-output-speaker",
+        "percTime": "100",
+        "timeAboveAverage": "3 hrs 36 min",
+        "totalTime": "23333",
+        "totalTimeStr": "6 hrs 28 min"
+      }
+    ],
+    "this-month": [
+      {
+        "avgVol": "68",
+        "device": "analog-output-speaker",
+        "percTime": "87",
+        "timeAboveAverage": "7 hrs 15 min",
+        "totalTime": "45329",
+        "totalTimeStr": "12 hrs 35 min"
+      },
+      {
+        "avgVol": "20",
+        "device": "analog-output-headphones",
+        "percTime": "13",
+        "timeAboveAverage": "56 min",
+        "totalTime": "6911",
+        "totalTimeStr": "1 hrs 55 min"
+      }
+    ],
+    "this-week": [
+      {
+        "avgVol": "22",
+        "device": "analog-output-headphones",
+        "percTime": "24",
+        "timeAboveAverage": "2 hrs 20 min",
+        "totalTime": "14723",
+        "totalTimeStr": "4 hrs 5 min"
+      },
+      {
+        "avgVol": "68",
+        "device": "analog-output-speaker",
+        "percTime": "76",
+        "timeAboveAverage": "7 hrs 26 min",
+        "totalTime": "46557",
+        "totalTimeStr": "12 hrs 55 min"
+      }
+    ],
+    "all-time": [
+      {
+        "avgVol": "22",
+        "device": "analog-output-headphones",
+        "percTime": "24",
+        "timeAboveAverage": "2 hrs 20 min",
+        "totalTime": "14723",
+        "totalTimeStr": "4 hrs 5 min"
+      },
+      {
+        "avgVol": "68",
+        "device": "analog-output-speaker",
+        "percTime": "76",
+        "timeAboveAverage": "7 hrs 26 min",
+        "totalTime": "46557",
+        "totalTimeStr": "12 hrs 55 min"
+      }
+    ]
+  }
+}

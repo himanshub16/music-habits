@@ -5,17 +5,27 @@
         <meta name="viewport" content="width=device-width">
         <title>Summary of sound usage</title>
         <link href="index.css" rel="stylesheet"/>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
     </head>
     <body>
 
         <h2>How much do I listen to music?</h2>
 
-        <div id="buttons">
+        <div class="buttons" id="nav">
+            <button id="summary-btn" class="btn">Summary</button>
+            <button id="hourly-btn" class="btn">Hour wise</button>
+        </div>
+
+        <div class="buttons" id="intervals">
             <button class="btn" id="this-month">This Month</button>
             <button class="btn" id="yesterday">Yesterday</button>
             <button class="btn" id="today">Today</button>
             <button class="btn" id="this-week">This week</button>
             <button class="btn" id="all-time">From the beginning of history</button>
+        </div>
+
+        <div id="hourly-summary">
+            <canvas id="hourly-summary-canvas"></canvas>
         </div>
 
         <div id="summary">
