@@ -201,6 +201,85 @@ func getSummary(deviceWiseRecords *map[string][]record) []summary_t {
 	return summary
 }
 
+type hourSummary_t struct {
+	Hour   int
+	AvgVol int
+	Device string
+}
+
+func getHourWiseSummary(deviceWiseRecords *map[string][]record) []hourSummary_t {
+
+	hourlySummary := make([]hourSummary_t, 24)
+	totalTime := make([]int64, 24)
+	totalVol := make([]float64, 24)
+	headphoneTime := make([]int64, 24)
+	speakerTime := make([]int64, 24)
+	nSamples := make([]float64, 24)
+	var timeToAdd int64
+
+	for i := 0; i < 24; i++ {
+		totalTime[i] = 0
+		totalVol[i] = 0
+		headphoneTime[i] = 0
+		speakerTime[i] = 0
+		nSamples[i] = 0
+	}
+
+	var startTime, endTime, curTime time.Time
+
+	for deviceName, records := range *deviceWiseRecords {
+		for _, r := range records {
+			// for all hours it belongs to
+			startTime = time.Unix(r.Start, 0)
+			endTime = time.Unix(r.End, 0)
+
+			for curTime = startTime; curTime.Before(endTime); curTime = curTime.Add(1 * time.Hour) {
+				timeToAdd = 0
+				if endTime.Before(curTime.Add(1 * time.Hour)) {
+					timeToAdd = endTime.Unix() - curTime.Unix()
+				} else {
+					timeToAdd = 3600
+				}
+
+				totalTime[curTime.Hour()] += timeToAdd
+				if strings.Contains(deviceName, "speaker") {
+					speakerTime[curTime.Hour()] += timeToAdd
+				} else if strings.Contains(deviceName, "headphone") {
+					headphoneTime[curTime.Hour()] += timeToAdd
+				}
+				totalVol[curTime.Hour()] += r.Vol
+				nSamples[curTime.Hour()] += 1
+			}
+		}
+	}
+
+	// prepare hourly summary
+	for i := 0; i < 24; i++ {
+		hourlySummary[i].Hour = i
+		if totalVol[i] != 0 {
+			hourlySummary[i].AvgVol = int(math.Round(totalVol[i] * 100 / nSamples[i]))
+		}
+		if headphoneTime[i] < speakerTime[i] {
+			hourlySummary[i].Device = "Speakers"
+		} else {
+			hourlySummary[i].Device = "Headphones"
+		}
+	}
+
+	return hourlySummary
+}
+
+func displayHourlySummary(hourlySummary []hourSummary_t) {
+	fmt.Println("Hour wise usage :")
+	fmt.Println("Hours  | Average vol | Mostly listen on")
+	fmt.Println("---------------------------------------")
+	for i := 0; i < 24; i++ {
+		if hourlySummary[i].AvgVol != 0 {
+			fmt.Printf(" %2d    |     %2d %%    | %s \n", hourlySummary[i].Hour, hourlySummary[i].AvgVol, hourlySummary[i].Device)
+		}
+	}
+}
+
 // func getPropsForDevice(deviceName string) (commonName string, r, g, b, a float64) {
 // 	if strings.Contains(deviceName, "headphones") {
 // 		return "Headphones", 255.0, 79.0, 94.0, 0.0 // red
@@ -262,12 +341,12 @@ func displaySummary(summary []summary_t) {
 func main() {
 
 	var logPath, duration string
-	var viz bool
+	var interactive bool
 	var port int
 
 	flag.StringVar(&logPath, "logfile", "", "Path to log file")
 	flag.StringVar(&duration, "duration", "today", "Period - today/yesterday/everyday/week/month")
-	flag.BoolVar(&viz, "viz", false, "Start server to show viz")
+	flag.BoolVar(&interactive, "interactive", false, "Start server to interactively view summary")
 	flag.IntVar(&port, "port", 5000, "Port")
 
 	flag.Parse()
@@ -276,7 +355,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	if viz {
+	if interactive {
 		startServer(logPath, port)
 	} else {
 		var startEpoch, endEpoch int64
@@ -286,6 +365,9 @@ func main() {
 
 		summary := getSummary(records)
 		displaySummary(summary)
+
+		hourlySummary := getHourWiseSummary(records)
+		displayHourlySummary(hourlySummary)
 	}
 
 }
@@ -314,7 +396,7 @@ func startServer(logPath string, port int) {
 		w.Header().Set("Content-Type", "application/json")
 		json.NewEncoder(w).Encode(response)
 	})
-	fs := http.FileServer(http.Dir("webui"))
+	fs := http.FileServer(http.Dir("docs"))
 	http.Handle("/", fs)
 
 	fmt.Printf("Starting server. Go to http://localhost:%d/\n", port)
