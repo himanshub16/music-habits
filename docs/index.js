@@ -158,7 +158,7 @@ function updateHourlyPlot(hourlySummary) {
 }
 
 window.onload = () => {
-  fetch('/dummy-data.json')
+  fetch('dummy-data.json')
     .then(res => res.json())
     .then(json => {
       dummyResponse = json
