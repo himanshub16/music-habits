@@ -32,17 +32,12 @@
 #include <locale.h>
 #include <ctype.h>
 #include <time.h>
+#include <stdbool.h>
 
 #include <sndfile.h>
 
 #include <pulse/pulseaudio.h>
 #include <pulse/ext-device-restore.h>
-
-#include <pulsecore/i18n.h>
-#include <pulsecore/macro.h>
-#include <pulsecore/core-util.h>
-#include <pulsecore/log.h>
-#include <pulsecore/sndfile-util.h>
 
 static void quit(int);
 double active_sink_vol = 0.0f;
@@ -206,9 +201,6 @@ static char
     *port_name = NULL,
     *formats = NULL;
 
-static bool short_list_format = false;
-
-
 static pa_proplist *proplist = NULL;
 
 static SNDFILE *sndfile = NULL;
@@ -221,11 +213,12 @@ static pa_stream *sample_stream = NULL;
 static int actions = 0;
 
 static void quit(int ret) {
-    pa_assert(mainloop_api);
+    assert(mainloop_api);
     mainloop_api->quit(mainloop_api, ret);
 }
 
 static void context_drain_complete(pa_context *c, void *userdata) {
+    (void)userdata;
     pa_context_disconnect(c);
 }
 
@@ -239,7 +232,7 @@ static void drain(void) {
 }
 
 static void complete_action(void) {
-    pa_assert(actions > 0);
+    assert(actions > 0);
 
     if (!(--actions))
         drain();
@@ -247,11 +240,12 @@ static void complete_action(void) {
 
 
 static void get_sink_info_callback(pa_context *c, const pa_sink_info *i, int is_last, void *userdata) {
+    (void)userdata;
     uint64_t vol_perc;
     double vol;
 
     if (is_last < 0) {
-        pa_log(_("Failed to get sink information: %s"), pa_strerror(pa_context_errno(c)));
+        fprintf(stderr, "Failed to get sink information: %s\n", pa_strerror(pa_context_errno(c)));
         /* quit(1); */
         return;
     }
@@ -261,11 +255,17 @@ static void get_sink_info_callback(pa_context *c, const pa_sink_info *i, int is_
         return;
     }
 
-    pa_assert(i);
+    assert(i);
 
     vol_perc = ((uint64_t)pa_cvolume_avg(&i->volume) * 100 + (uint64_t)PA_VOLUME_NORM / 2) / (uint64_t)PA_VOLUME_NORM;
     vol = (i->mute || i->state != PA_SINK_RUNNING) ? 0.0f : vol_perc / 100.00f;
 
+
+    if(!(i->active_port))
+    {
+        // Port not active
+        return;
+    }
 
     char fname[1000], node_id[1000];
     sprintf(node_id, "sink-%u-%s", i->index, i->active_port->name);
@@ -290,13 +290,14 @@ static void get_sink_info_callback(pa_context *c, const pa_sink_info *i, int is_
 
 
 static void get_sink_input_info_callback(pa_context *c, const pa_sink_input_info *i, int is_last, void *userdata) {
+    (void)userdata;
     uint64_t vol_perc;
     double vol;
-    const char *application_name, *application_process_binary;
+    const char *application_process_binary;
 
 
     if (is_last < 0) {
-        pa_log(_("Failed to get sink input information: %s"), pa_strerror(pa_context_errno(c)));
+        fprintf(stderr, "Failed to get sink input information: %s\n", pa_strerror(pa_context_errno(c)));
         /* quit(1); */
         return;
     }
@@ -306,14 +307,13 @@ static void get_sink_input_info_callback(pa_context *c, const pa_sink_input_info
         return;
     }
 
-    pa_assert(i);
+    assert(i);
 
     vol_perc = ((uint64_t)pa_cvolume_avg(&i->volume) * 100 + (uint64_t)PA_VOLUME_NORM / 2) / (uint64_t)PA_VOLUME_NORM;
 
     vol = (i->corked || i->mute) ? 0.0f : vol_perc / 100.00f;
 
     application_process_binary = pa_proplist_gets(i->proplist, "application.process.binary");
-    application_name = pa_proplist_gets(i->proplist, "application.name");
 
 
     // here we form a node and insert it to the list
@@ -339,7 +339,8 @@ static void get_sink_input_info_callback(pa_context *c, const pa_sink_input_info
 
 
 static void context_subscribe_callback(pa_context *c, pa_subscription_event_type_t t, uint32_t idx, void *userdata) {
-    pa_assert(c);
+    (void)userdata;
+    assert(c);
     pa_operation *o = NULL;
 
     switch (t & PA_SUBSCRIPTION_EVENT_FACILITY_MASK) {
@@ -374,9 +375,10 @@ static void context_subscribe_callback(pa_context *c, pa_subscription_event_type
 }
 
 static void context_state_callback(pa_context *c, void *userdata) {
+    (void)userdata;
     pa_operation *o = NULL;
 
-    pa_assert(c);
+    assert(c);
 
     switch (pa_context_get_state(c)) {
         case PA_CONTEXT_CONNECTING:
@@ -412,7 +414,7 @@ static void context_state_callback(pa_context *c, void *userdata) {
             }
 
             if (actions < 3) {
-                pa_log("Operation failed: %s", pa_strerror(pa_context_errno(c)));
+                fprintf(stderr, "Operation failed: %s\n", pa_strerror(pa_context_errno(c)));
                 quit(1);
             }
 
@@ -424,13 +426,17 @@ static void context_state_callback(pa_context *c, void *userdata) {
 
         case PA_CONTEXT_FAILED:
         default:
-            pa_log(_("Connection failure: %s"), pa_strerror(pa_context_errno(c)));
+            fprintf(stderr, "Connection failure: %s\n", pa_strerror(pa_context_errno(c)));
             quit(1);
     }
 }
 
 static void exit_signal_callback(pa_mainloop_api *m, pa_signal_event *e, int sig, void *userdata) {
-    pa_log(_("Got SIGINT, exiting."));
+    (void)m;
+    (void)e;
+    (void)sig;
+    (void)userdata;
+    fprintf(stderr, "Got SIGINT, exiting.\n");
     cleanup_all_nodes();
     quit(0);
 }
@@ -439,7 +445,8 @@ enum {
     ARG_VERSION = 256
 };
 
-int main(int argc, char *argv[]) {
+int main() {
+    fprintf(stdout, "Hi!\n");
     pa_mainloop *m = NULL;
     int ret = 1;
     char *server = NULL;
@@ -452,30 +459,47 @@ int main(int argc, char *argv[]) {
     proplist = pa_proplist_new();
 
     if (!(m = pa_mainloop_new())) {
-        pa_log(_("pa_mainloop_new() failed."));
+        fprintf(stderr, "pa_mainloop_new() failed.\n");
         goto quit;
     }
 
     mainloop_api = pa_mainloop_get_api(m);
 
-    pa_assert_se(pa_signal_init(mainloop_api) == 0);
+    assert(pa_signal_init(mainloop_api) == 0);
     pa_signal_new(SIGINT, exit_signal_callback, NULL);
     pa_signal_new(SIGTERM, exit_signal_callback, NULL);
-    pa_disable_sigpipe();
+
+    /** Ingnore SIGPIPE **/
+    struct sigaction sa;
+
+    memset(&sa, 0, sizeof(struct sigaction));
+
+    if (sigaction(SIGPIPE, NULL, &sa) < 0) {
+        fprintf(stderr, "sigaction(): %s\n", strerror(errno));
+        return 1;
+    }
+
+    sa.sa_handler = SIG_IGN;
+
+    if (sigaction(SIGPIPE, &sa, NULL) < 0) {
+        fprintf(stderr, "sigaction(): %s\n", strerror(errno));
+        return 1;
+    }
+    /****/
 
     if (!(context = pa_context_new_with_proplist(mainloop_api, NULL, proplist))) {
-        pa_log(_("pa_context_new() failed."));
+        fprintf(stderr, "pa_context_new() failed.\n");
         goto quit;
     }
 
     pa_context_set_state_callback(context, context_state_callback, NULL);
     if (pa_context_connect(context, server, 0, NULL) < 0) {
-        pa_log(_("pa_context_connect() failed: %s"), pa_strerror(pa_context_errno(context)));
+        fprintf(stderr, "pa_context_connect() failed: %s\n", pa_strerror(pa_context_errno(context)));
         goto quit;
     }
 
     if (pa_mainloop_run(m, &ret) < 0) {
-        pa_log(_("pa_mainloop_run() failed."));
+        fprintf(stderr, "pa_mainloop_run() failed.\n");
         goto quit;
     }
 
