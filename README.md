@@ -41,19 +41,16 @@ Build
 ```bash
 git clone https://github.com/himanshub16/music-habits
 cd music-habits
-./setup.sh
+make
 ```
 
 start collecting data
 ```bash
-cd pulseaudio/src
-make pactl
 ./pactl
 ```
 
 view data collected
 ```bash
-cd pulseaudio/src
 tail -f sink*
 ```
 
@@ -61,10 +58,10 @@ generate summary
 ```bash
 # to print summary (notice the file path)
 # duration can be today/yesterday/month/all
-go run generate_report.go -logfile pulseaudio/src/sink_input-firefox.log -duration today
+go run generate_report.go -logfile sink_input-firefox.log -duration today
 
 # to visualize in browser
-go run generate_report.go -logfile pulseaudio/src/sink_input-firefox.log -interactive -port 5000
+go run generate_report.go -logfile sink_input-firefox.log -interactive -port 5000
 ```
 
 ## Why pulseaudio?
